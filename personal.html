@@ -1,0 +1,168 @@
+<!--This program is used to display a meaningful & good alignment 
+    registration form designed by me.
+    Author: Stella Li, BC005200
+    Date: 1 March, 2023                         -->
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <script type="text/javascript">
+    // used to validate firstname and lastname fields based on their value.
+    let name;   // object to contain name value.
+    function validateName(name){
+        var x=document.forms["myForm"][name].value;   // assign field value to name
+        var y = /[\'\"\\<>;&=#~`/1234567890]/;   // set characters that cannot appear in name
+        if (x!="" && y.test(x)){   // test value and clear it if invalid
+            alert("Invalid name value");
+            document.forms["myForm"][name].value='';
+        }
+    }
+    //  used to validate email address
+    function validateEmail(){
+      var x=document.forms["myForm"]["email"].value;   // assign field value
+      var atpos=x.indexOf("@");   // assign position of '@'
+      var dotpos=x.lastIndexOf(".");   // assign position of '.'
+      // test : value must contain '@' and '.'; '@' cannot be first character; must have >=1 '.' before '@'
+      if (x!="" && atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
+        alert("Invalid e-mail address!");
+      }
+    }
+    //  used to change webpage color
+    let i;
+    function changeColor(i){
+        // extract RGB value and store them in red, green and blue.
+        var red = parseInt("0x"+i[1]+i[2]);
+        var green = parseInt("0x"+i[3]+i[4]);
+        var blue = parseInt("0x"+i[5]+i[6]);
+        var luma = (red * 0.2126 + green * 0.7152 + blue * 0.0722) / 255;   // calculate grayscale value
+        // change font color with the background to support reading
+        if (luma>=0.5){        
+            alert("light background may make the text invisible.\nSet the text to dark blue.");
+            document.body.style.color="#0D1D36";   // dark fonts if bgcolor is light
+        }else{
+            document.body.style.color="#fcee73";   // light fonts if bgcolor is dark
+        }
+        document.getElementById("body").style.background=i;   // change background color
+    }
+    </script>
+    </head>
+    
+    <body id="body" bgcolor=#0D1D36 style="color:#fcee73" >
+    <p align=center><img src="Banner.jpeg" ></p>   <!-- Banner -->
+    <form action="action_page.php" name="myForm">
+    <h1 align=center>Registration</h1>   <!-- Heading -->
+    <HR width="80%" color=#fcee73 SIZE=1>
+    <p align=center><i>Please fill this form to complete your registration<br>
+        Fields with * are required</i></p>   <!-- notes -->
+    
+    <!-- collect personal infomation -->
+    <fieldset>   
+    <legend><b>Personal Infomation:</b></legend>
+    <table border = 0 border-radius: 10px width=50% align=left id="body"> 
+        <tr>
+            <td>First Name:*</td>
+            <td><input type="text" name="firstname" onblur="validateName('firstname')" required></td>
+        </tr> <tr>
+            <td>Last Name:*</td>
+            <td><input type="text" name="lastname" onblur='validateName("lastname")' required></td>
+        </tr> <tr>
+            <td>Birthday:*</td> 
+            <td><input type="date" name="Birthday" min="1923-01-01" max="2023-01-01" required></td>
+        </tr> <tr>
+            <td>Email:*</td>
+            <td><input type="email" name="email" onblur="validateEmail()" required></td>     
+        </tr> <tr>
+           <td>Gender:*</td> 
+           <td><input type="radio" name="gender" value="male" required>Male
+            <input type="radio" name="gender" value="female">Female</td>
+        </tr> <tr>
+            <td>Telephone:*</td>
+            <td><select name="region" id="region" required onload="Phone()">
+              <option value="Macao">Macao, China (+853)</option>
+              <option value="Hong Kong">Hong Kong, China (+852)</option>
+            <td><input type="text" name="Telephone" pattern="[0-9]{4}-[0-9]{4}"></td>
+            <td><small>Format: 1234-5678</small></td>
+    </table>
+    </fieldset>
+    
+    <!-- collect interest(optional) -->
+    <fieldset>   
+    <legend><b>Interest:</b></legend>
+    <table border = 0 width=40% align=left>
+        <tr>
+            <td>Hobby:</td>
+            <td><select name="Hobby">
+            <option value="Swimming">Swimming</option>
+            <option value="Reading Books">Reading Books</option>
+            <option value="Watching Movies">Watching Movies</option>
+            <option value="Music">Music</option>
+            <option value="Others">Others</option></td>      
+        </tr> <tr>
+            <td>Languages:</td> 
+            <td><input type="checkbox" name="languages" value="java">Java
+            <input type="checkbox" name="languages" value="c/c++">C/C++
+            <input type="checkbox" name="languages" value="c#">C#</td>
+    </table>
+    </fieldset>
+    
+    <!-- Account Settings -->
+    <fieldset>
+    <legend><b>Account</b></legend>
+    <table><tr>
+            <td>Set Background Color:</td> 
+            <td><input type="color" name="bgcolor" id="bgcolor"></td>
+            <td><input type="button" name="color" id="color" value="Preview"
+                onclick="changeColor(document.getElementById('bgcolor').value)"></td>
+        </tr> <tr>
+            <td>Password:</td> 
+            <td><input type="password" name="password" minlength="6" maxlength="12" required></td>
+        </tr> <tr>
+            <td>Description:</td> 
+            <td><textarea name="message" rows="10" cols="30">Enter your self description here...</textarea></td>
+        </tr>
+    </table>
+    </fieldset>
+    <br><br>
+    <input type="checkbox" required>I agree with the user policy.<br><br>
+    
+    <!-- submit & clear buttons -->    
+    <table border = 0 width=40% align=center>
+        <tr>
+            <td><input type="reset" value="Clear"></td>
+        </tr>
+    </table>
+    <br><br>
+    <HR width="80%" color=#fcee73 SIZE=1>
+    
+    <!-- Organization Infomation -->
+    <table border = 0 width=80% align=center>
+        <tr>
+            <th rowspan="3">
+            <a href="https://www.um.edu.mo/"><img src="logo.jpeg" height="200" width="200"></a>    
+            </th>
+            <td colspan="2"><b>Connect with us</b></td>
+            <td colspan="2"><b>About us</b></td>
+            <th rowspan="4">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3695.8943904365055!2d113.54359081543677!3d22.130001985412253!2m3!
+            1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3401703f064ef97f%3A0xeb5f9c6e4a48b246!2z5r6z6ZaA5aSn5a24!5e0!3m2!1szh-CN!2s!4v1677590943668!5m2!1szh-CN!2s" 
+            width="200" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </th>
+        </tr><tr>
+            <td><small>Phone: </small></td>
+            <td><small>+853 6865-7391</small></td>
+        </tr><tr>
+            <td><small>Address: </small></td>
+            <td><small>University of Macau<br>
+            Avenida da Universidade<br>
+            Taipa, Macau, China</small></td>
+            <td colspan="2" rowspan="2"><small>Hello World!<br>
+                Hope you have a nice day!</small></td>
+            </tr><tr>
+            <td align="center"><small>Click logo to visit our website</small></td>
+            <td><small>Email: </small></td>
+                <td><small><email>stella_yjl@163.com</email></small></td>
+        </tr>
+    </table>
+    </form>
+    </body>
+    </html>
